@@ -20,11 +20,11 @@ class PostController extends Controller
 
         $offset = isset($_GET['ofs']) ? intval($_GET['ofs']) : 0;
         $total_posts = Post::select('id')->where('status', 1)->count();
-        $limit = 1;
+        $limit = 2;
         $has_prev = ($offset < $total_posts-1) ? true : false;
         $has_next = ($offset > 0) ? true : false;
-        $prev_offset = ($has_prev) ? $offset+1 : null;
-        $next_offset = ($offset > 0) ? $offset-1 : null;
+        $prev_offset = ($has_prev) ? $offset+$limit : null;
+        $next_offset = ($offset > 0) ? $offset-$limit : null;
         // $has_new = 
         // dd($offset, $total_posts, $limit);
         $posts = $recent= Post::select('posts.*', 'u.name')->leftJoin('users as u', 'u.id', 'posts.crt_by')->where('posts.status', 1)->orderBy('posts.id', 'desc')->limit($limit)->offset($offset)->get();
@@ -124,10 +124,17 @@ class PostController extends Controller
 
     public function get_cat_blogs(Request $request, $slug) {
 
+        $offset = isset($_GET['ofs']) ? intval($_GET['ofs']) : 0;
         $recent = Post::select('posts.*', 'u.name')->leftJoin('users as u', 'u.id', 'posts.crt_by')->where('posts.status', 1)->orderBy('posts.id', 'desc')->limit('5')->get();
         $cat_id = $this->get_cat_id_by_name($slug);
+        $total_posts = Post::select('id')->where('cat_id', $cat_id)->where('status', 1)->count();
         $posts = Post::select('posts.*', 'u.name')->leftJoin('users as u', 'u.id', 'posts.crt_by')->where('posts.status', 1)->where('posts.cat_id', $cat_id)->orderBy('posts.id', 'desc')->limit('5')->get();
-        return view('front.home', compact('posts', 'recent'));
+        $limit = 2;
+        $has_prev = ($offset < $total_posts-1) ? true : false;
+        $has_next = ($offset > 0) ? true : false;
+        $prev_offset = ($has_prev) ? $offset+$limit : null;
+        $next_offset = ($offset > 0) ? $offset-$limit : null;
+        return view('front.home', compact('posts', 'recent', 'has_prev', 'has_next', 'prev_offset', 'next_offset'));
 
     }
     

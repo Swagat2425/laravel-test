@@ -39,5 +39,9 @@ class DatabaseSeeder extends Seeder
         $category1->crt_on = $now_date;
         $category1->save();
 
+        $this->call(AdminSeeder::class);
+        $this->call(UserSeeder::class);
+        $this->call(PostSeeder::class);
+
     }
 }
