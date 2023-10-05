@@ -1,0 +1,46 @@
+.cst-avatar {
+    border-radius: 50% !important;
+    margin-top: -7px;
+    height: 37px;
+    width: 37px;
+    margin-bottom: 5px;
+    font-weight: 600;
+    background-color: #ffc107;
+    border-color: #ffc107;
+    box-shadow: none;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+#drpdwn {
+    display: block;
+    float: right;
+}
+
+.drdn {
+    display: block;
+    text-align: right !important;
+}
+#drdn {
+    display:none !important;
+}
+
+.drpdwn {
+    right: 0;
+    left: auto;;
+}
+
+.cst-dropdown {
+    float: right !important;
+    width: 100% !important;
+}
+
+@media(max-width:992px) {
+    .drdn {
+        display: none !important;
+    }
+    #drdn {
+        display: block !important;
+    }
+}
